@@ -36,3 +36,20 @@ tasks:
     description: Mozilla Firefox
     parameters:
       package: Mozilla.Firefox 
+
+  - name: ~/powershell
+    description: Install HttpWatch
+    parameters:
+      script: |
+        # Define HttpWatch download URL
+        $httpWatchUrl = "https://download.httpwatch.com/httpwatch.exe?v=15.0.16.exe"
+        $installerPath = "$env:TEMP\HttpWatchSetup.exe"
+
+        # Download installer
+        Invoke-WebRequest -Uri $httpWatchUrl -OutFile $installerPath
+
+        # Launch installer in silent mode
+        Start-Process -FilePath $installerPath -ArgumentList "/S" -Wait
+
+        # Delete installer
+        Remove-Item -Path $installerPath -Force
